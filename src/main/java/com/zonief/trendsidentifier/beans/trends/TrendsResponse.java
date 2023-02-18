@@ -1,4 +1,4 @@
-package com.zonief.trendsidentifier.beans;
+package com.zonief.trendsidentifier.beans.trends;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

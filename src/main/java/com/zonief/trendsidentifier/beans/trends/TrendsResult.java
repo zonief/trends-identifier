@@ -1,4 +1,4 @@
-package com.zonief.trendsidentifier.beans;
+package com.zonief.trendsidentifier.beans.trends;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
