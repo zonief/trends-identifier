@@ -24,7 +24,7 @@ public class GoogleTrendsService {
   }
 
   private TrendsResponse getTrends() throws JsonProcessingException {
-    log.info("Getting trends from google...");
+    log.debug("Getting trends from google...");
     return objectMapper.readValue(StringUtils.substringAfter(googleTrendsWebClient.get()
         .uri("/trends/api/topdailytrends?geo=FR")
         .retrieve()
@@ -36,7 +36,8 @@ public class GoogleTrendsService {
     var resultList = getTrends().getTrendsResult().getTrendingSearches().stream()
         .map(TrendingSearch::getTitle).toList();
 
-    resultList.forEach(log::info);
+    log.debug("Trends: ");
+    resultList.forEach(log::debug);
 
     return resultList;
   }

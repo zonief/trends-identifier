@@ -1,0 +1,17 @@
+webclient:
+  chatGptConnector:
+    baseUrl: 'localhost'
+    port: '18001'
+  wordpressPublisher:
+    baseUrl: 'localhost'
+    port: '18003'
+
+server:
+  port: '18002'
+
+spring:
+  main:
+    web-application-type: none
+
+scheduling:
+  interval: 60000
