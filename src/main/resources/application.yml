@@ -1,17 +1,13 @@
-webclient:
-  chatGptConnector:
-    baseUrl: 'localhost'
-    port: '18001'
-  wordpressPublisher:
-    baseUrl: 'localhost'
-    port: '18003'
-
 server:
   port: '18002'
 
 spring:
   main:
     web-application-type: none
+  kafka:
+    bootstrap-servers: localhost:29092;localhost:39092
+    topic: trend
 
 scheduling:
   interval: 60000
+

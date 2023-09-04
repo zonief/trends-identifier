@@ -3,9 +3,11 @@ package com.zonief.trendsidentifier.service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,37 +24,41 @@ public class KeyWordCheckerService {
     }
   }
 
-  public boolean isNew(String keyword) {
-    boolean foundKeyword = false;
+  public String giveFirstValidKeyword(List<String> keywords) {
 
-    File file = new File(FILENAME);
-    if (!file.exists()) {
-      try {
-        writeKeyword(keyword,file.createNewFile() ? file : null);
-        return true;
-      } catch (IOException e) {
-        log.error("Error creating file: " + e.getMessage());
-      }
-    }
+    var resultKeyword = StringUtils.EMPTY;
 
-    try (Scanner scanner = new Scanner(file)) {
-      while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
-        if (line.contains(keyword)) {
-          return false;
+    for (String keyword : keywords) {
+      var keywordFound = false;
+
+      File file = new File(FILENAME);
+      if (!file.exists()) {
+        try {
+          writeKeyword(keyword, file.createNewFile() ? file : null);
+          resultKeyword = keyword;
+        } catch (IOException e) {
+          log.error("Error creating file: " + e.getMessage());
         }
       }
-    } catch (IOException e) {
-      log.error("Error reading file: " + e.getMessage());
+
+      try (Scanner scanner = new Scanner(file)) {
+        while (scanner.hasNextLine()) {
+          String line = scanner.nextLine();
+          if (line.contains(keyword)) {
+            keywordFound = true;
+            break;
+          }
+        }
+      } catch (IOException e) {
+        log.error("Error reading file: " + e.getMessage());
+      }
+
+      if (!keywordFound) {
+        writeKeyword(keyword, file);
+        break;
+      }
     }
 
-    // if the keyword was not found, add it to the file
-    if (!foundKeyword) {
-      writeKeyword(keyword, file);
-    }
-
-    log.info("Keyword \"" + keyword + "\" " + (foundKeyword ? "was" : "was not") + " found in the file.");
-
-    return !foundKeyword;
+    return resultKeyword;
   }
 }

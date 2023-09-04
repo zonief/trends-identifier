@@ -1,33 +1,26 @@
 package com.zonief.trendsidentifier.config;
 
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import javax.net.ssl.SSLException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
 
 @Configuration
 @Slf4j
 public class WebClientConfig {
 
-  @Value("${webclient.chatGptConnector.port}")
+/*  @Value("${webclient.chatGptConnector.port}")
   private String chatGptConnectorPort;
   @Value("${webclient.chatGptConnector.baseUrl}")
   private String chatGptConnectorBaseUrl;
   @Value("${webclient.wordpressPublisher.port}")
   private String wordpressPublisherPort;
   @Value("${webclient.wordpressPublisher.baseUrl}")
-  private String wordpressPublisherBaseUrl;
+  private String wordpressPublisherBaseUrl;*/
 
   @Bean(name = "googleTrendsWebClient")
   @Primary
@@ -44,7 +37,7 @@ public class WebClientConfig {
         .build();
   }
 
-  @Bean(name = "chatGptConnectorWebClient")
+/*  @Bean(name = "chatGptConnectorWebClient")
   public WebClient chatGptConnectorWebClient() throws SSLException {
     log.info("Creating chatGptConnectorWebClient with baseUrl: {} and port: {}", chatGptConnectorBaseUrl, chatGptConnectorPort);
     final int size = 16 * 1024 * 1024;
@@ -84,6 +77,6 @@ public class WebClientConfig {
         .exchangeStrategies(strategies)
         .clientConnector(new ReactorClientHttpConnector(httpClient))
         .build();
-  }
+  }*/
 
 }
